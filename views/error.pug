@@ -1,0 +1,26 @@
+html
+    head
+        title=message
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        meta(name="viewport", content="width=device-width, initial-scale=0.8, maximum-scale=0.9, minimum-scale=0.7")
+    body(style="background-color: #343434;")
+        div(style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 350px; background-color: white; padding: 25px 10px; text-align: center;")
+            h2#error_msg(style="color: #535353; font-weight: 500;") Error 404
+            hr(style="height: 1px; background-color: #B7B7B7; margin: 20px 30px;")
+            p#error_msg_detail(style="color: #535353; margin-bottom: 25px; padding: 0 30px;") There is no address you want.
+            a(style="color: #5E6EFF; text-decoration: none;", href="/") Back to Home
+
+        script.
+            let error_msg = $('#error_msg');
+            let error_msg_detail = $('#error_msg_detail');
+            switch('!{code}') {
+                case "101":
+                    error_msg.text("Sesssion Error");
+                    error_msg_detail.text("Your session is disconnected with server. Try reconnect.");
+                    break;
+                case "102":
+                    error_msg.text("Connection Error");
+                    error_msg_detail.text("Client couldn't get data from server.");
+                    break;
+            }

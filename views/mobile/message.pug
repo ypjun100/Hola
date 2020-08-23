@@ -1,0 +1,124 @@
+html
+    head
+        title Message
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        script(src="/socket.io/socket.io.js")
+        script(src="/javascripts/cookie.js")
+        meta(name="viewport", content="width=device-width, initial-scale=0.8, maximum-scale=0.9, minimum-scale=0.7")
+        script.
+            $(window).resize(function (){
+                var ratio = window.devicePixelRatio; if(!(ratio > 1)){ location.href="/message"; }
+            });
+    body
+        div.div_main_left_bar
+            img#my_profile.img_main_icon_sel(src="/images/main_profile_white.jpg", style="width:45px; border-radius: 100px; margin: 0; margin-top: 35px; margin-bottom: 5px;")
+            br
+            a(href="/m/people")
+                img.img_main_icon(src="/images/main_people.png")
+            br
+            img.img_main_icon_sel(src="/images/main_chat.png", style="width: 40px;")
+            br
+            a(href="/m/information")
+                img.img_main_icon(src="/images/main_information.png", style="width: 45px;")
+        div(style="padding: 35px 10px 0 130px;")
+            h1.prev_drag.h1_main Message
+            div#message(style="margin-top: 30px;")
+                h3(style="color: #949494; font-weight: 400;") Nothing at now.
+                
+
+        div.div_main_overview_div
+            div.div_main_overview_background
+            div.div_main_overview_box
+                h1.prev_drag.h1_main(style="font-size: 20pt; margin: 20px 0 0 25px;") My Profile
+                img.img_main_icon_sel(src="/images/main_profile_gray.jpg", style="width: 55px; border-radius: 100px; float: left; margin: 25px; cursor: none;")
+                p#my_name.p_main_overview_name Anonymous
+        
+        script.
+            var alarm = new Audio('/sounds/bell.wav');
+
+            //Animation when click my profile
+            $('#my_profile').on('click', function() {
+                $('.div_main_overview_div').stop(true).css({'display': 'block', 'opacity': 0}).animate({'opacity': 1}, 400);
+            });
+
+            //Animation when close
+            $('.div_main_overview_background').on('click', function() {
+                $('.div_main_overview_div').stop(true).animate({'opacity': 0}, 300, function() {
+                    $(this).css({'display': 'none'})
+                });
+            });
+
+            //When click my name
+            $('#my_name').on('click', function() {
+                var new_nickname = prompt('Enter nickname to change.', $('#my_name').text());
+                if(new_nickname)
+                    socket.emit('change_my_nickname', getCookie('session_id'), new_nickname);
+            });
+
+            function click_msg(id) {
+                location.href = '/m/chat?id=' + id.substring(4);
+            }
+
+            var socket = io();
+            var user_data;
+
+            //Request to resume connecting with server
+            socket.emit('session_resume', getCookie('session_id'));
+
+            //Response of 'session_resume'
+            socket.on('session_resume', function(state) {
+                if(state) {
+                    //Reqest the data include my name and friends list
+                    socket.emit('request_data', getCookie('session_id'), 'message');
+                } else {
+                    location.href = "/error?code=101";
+                }
+            });
+
+            //Response of 'request_data'
+            socket.on('request_data', function(state, my_name, conn_people) {
+                if(state) {
+                    $('#my_name').text(my_name);
+
+                    if(Object.keys(conn_people).length)
+                        $('#message').empty();
+
+                    for(var key in conn_people) {
+                        var lastmsg = '';
+                        if(localStorage[key]) {
+                            lastmsg = localStorage[key].split(';');
+                            lastmsg = lastmsg[lastmsg.length - 1].split(":")[1];
+                        }
+                        $('#message').append('<div id=msg_' + key + ' onclick="click_msg(this.id);" class="div_msg_div shadow_2"><div><img src="/images/main_profile_gray.jpg"><div><h3>' + conn_people[key] + '</h3><p id="p_lastmsg_' + key + '">' + lastmsg + '</p></div></div></div>');
+                    }
+                } else {
+                    location.href = "/error?code=102";
+                }
+            });
+
+            //Response of 'change_my_nickname'
+            socket.on('change_my_nickname', function(state) {
+                if(state) {
+                    socket.emit('session_resume', getCookie('session_id'));
+                    alert('Changed your nickname!');
+                } else {
+                    alert("Couldn't changed the nickname. Maybe the nickname you enter is existing already or too long.");
+                }
+            });
+
+            //When user send a message.
+            socket.on('msg_user', function(inp_from_session_id, msg) {
+                let date = new Date();
+                
+                //Save message data in localStorage
+                if(localStorage[inp_from_session_id]) {
+                    localStorage[inp_from_session_id] = localStorage[inp_from_session_id] + ';' + inp_from_session_id + ':' + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    $('#p_lastmsg_' + inp_from_session_id).text(msg);
+                } else {
+                    localStorage[inp_from_session_id] = inp_from_session_id + ':' + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    $('#p_lastmsg_' + inp_from_session_id).text(msg);
+                }
+
+                alarm.play();
+            });

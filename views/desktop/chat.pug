@@ -1,0 +1,144 @@
+html(style="overflow-y: hidden;")
+    head
+        title Chat
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        script(src="/socket.io/socket.io.js")
+        script(src="/javascripts/cookie.js")
+        script.
+            var ratio = window.devicePixelRatio; if(ratio > 1){ location.href="/m/chat?id=" + "!{id}"; }
+
+            $(window).resize(function (){
+                var ratio = window.devicePixelRatio; if(ratio > 1){ location.href="/m/chat?id=" + "!{id}"; }
+            });
+    body
+        div(style="height: 64px; border-bottom: 1px solid #C4C4C4;")
+            button#bt_back(style="float: left; width: 64px; height: 64px; background-image: url('/images/chat_back.png'); background-size: 23px; background-repeat: no-repeat; background-position-x: 13px; background-position-y: center; background-color: white; cursor: pointer;")
+            p#p_to_name(style="float: left; color: #242424; line-height: 64px; font-size: 19pt; font-weight: 500; margin-left: -14px;").prev_drag Anoymous
+            p#p_exit(style="float: right; color: #5E6EFF; font-weight: 400; font-size: 15pt; line-height: 64px; margin-right: 20px; cursor: pointer;") Exit
+
+        div#div_msg(style="height: calc(100vh - 65px); overflow-y: auto;")
+            div#msg(style="padding: 10px 20px 80px;")
+
+        div(style="height: 70px; position: absolute; left: 0; bottom: 0; right: 0; background-image: url('/images/chat_grad_1.png'); background-size: contain;")
+            input#msg_input(type="text", onkeyup="checkKey();", style="width: calc(100vw - 120px); height: 57px; color: #1d1d1d; background-color: white; margin: 0 0 25px 20px; font-size: 16pt; border-radius: 100px; padding: 0 20px; border: 1px solid #5a5a5a;", placeholder="Type and word!", autofocus)
+            button#msg_submit.bt_chat_bottom_submit
+
+        script.
+            var alarm = new Audio('/sounds/bell.wav');
+
+            function checkKey() {
+                if(window.event.keyCode == 13) {
+                    if($('#msg_input').val()) {
+                        socket.emit('msg_user', getCookie('session_id'), '!{id}', $('#msg_input').val());
+                        $('#msg_input').focus();
+                    }
+                }
+            }
+
+            $('#bt_back').on('click', function() {
+                location.href="/message";
+            });
+
+            $('#p_exit').on('click', function() {
+                if(confirm("If you exit, you can't receive message anymore. Are you sure?")) {
+                    socket.emit('disconnect_two_user', getCookie('session_id'), '!{id}');
+                    localStorage.removeItem('!{id}');
+                    location.href="/message";
+                }
+            });
+
+            $('#msg_submit').on('click', function() {
+                if($('#msg_input').val()) {
+                    socket.emit('msg_user', getCookie('session_id'), '!{id}', $('#msg_input').val());
+                    $('#msg_input').focus();
+                }
+            });
+
+            var socket = io();
+
+            //Request to resume connecting with server
+            socket.emit('session_resume', getCookie('session_id'));
+
+            //Response of 'session_resume'
+            socket.on('session_resume', function(state) {
+                if(state) {
+                    //Reqest the data include my name and friends list
+                    socket.emit('request_data', getCookie('session_id'), 'chat', '!{id}');
+                } else {
+                    location.href = "/error?code=101";
+                }
+            });
+
+            //Response of 'request_data'
+            socket.on('request_data', function(state, user_name) {
+                if(state) {
+                    $('#p_to_name').text(user_name);
+                    $('title').text(user_name);
+
+                    //Load message
+                    if(localStorage['!{id}']) {
+                        var history = localStorage['!{id}'].split(';');
+                    
+                        for(var i = 0; i < history.length; i++) {
+                            var data = history[i].split(':');
+                            if(data[0] == getCookie('session_id')) {
+                                $('#msg').append('<div class="req_msg"><span>' + data[1] + '</span><p>' + data[2] + ":" + data[3] + '</p></div');
+                                $('#div_msg').scrollTop($('#div_msg')[0].scrollHeight);
+                            } else {
+                                $('#msg').append('<div class="res_msg"><span>' + data[1] + '</span><p>' + data[2] + ":" + data[3] +  '</p></div');
+                                $('#div_msg').scrollTop($('#div_msg')[0].scrollHeight);
+                            }
+                        }
+                    }
+
+                } else {
+                    alert("Disconnected with user.");
+                    localStorage.removeItem('!{id}');
+                    location.href = '/message';
+                }
+            });
+
+            //If User's message sucess to send it will be run.
+            socket.on('msg_user_result', function(state) {
+                if(state) {
+                    let date = new Date();
+                    $('#msg').append('<div class="req_msg"><span>' + $('#msg_input').val() + '</span><p>' + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2) + '</p></div');
+                    $('#div_msg').scrollTop($('#div_msg')[0].scrollHeight + 80);
+                    
+                    //Save message data in localStorage
+                    if(localStorage['!{id}']) {
+                        localStorage['!{id}'] = localStorage['!{id}'] + ';' + getCookie('session_id') + ":" + $("#msg_input").val() + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    } else {
+                        localStorage['!{id}'] = getCookie('session_id') + ":" + $("#msg_input").val() + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    }
+
+                    $('#msg_input').val('');
+                } else {
+                    alert("Disconnected with user.");
+                    localStorage.removeItem('!{id}');
+                    location.href = '/message';
+                }
+            });
+
+            //When user send a message.
+            socket.on('msg_user', function(inp_from_session_id, msg) {
+                let date = new Date();
+                if('!{id}' == inp_from_session_id) {
+                    $('#msg').append('<div class="res_msg"><span>' + msg + '</span><p>' + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2) + '</p></div');
+                    $('#div_msg').scrollTop($('#div_msg')[0].scrollHeight + 80);
+
+                    //Save message data in localStorage
+                    if(localStorage[inp_from_session_id]) {
+                        localStorage[inp_from_session_id] = localStorage[inp_from_session_id] + ';!{id}:' + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    } else {
+                        localStorage[inp_from_session_id] = "!{id}:" + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    }
+                } else if(localStorage[inp_from_session_id]) {
+                    localStorage[inp_from_session_id] = localStorage[inp_from_session_id] + ';' + inp_from_session_id + ":" + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    alarm.play();
+                } else {
+                    localStorage[inp_from_session_id] = inp_from_session_id + ":" + msg  + ":" + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+                    alarm.play();
+                }
+            });

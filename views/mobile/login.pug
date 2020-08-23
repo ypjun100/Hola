@@ -1,0 +1,66 @@
+html
+    head
+        title Hola
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        script(src="/socket.io/socket.io.js")
+        script(src="/javascripts/cookie.js")
+        meta(name="viewport", content="width=device-width, initial-scale=0.8, maximum-scale=0.9, minimum-scale=0.7")
+        script.
+            $(window).resize(function (){
+                var ratio = window.devicePixelRatio; if(!(ratio > 1)){ location.href="/"; }
+            });
+
+    body(style="display: flex; align-items: center;")
+        div(style="width: 400px; text-align: center; background-color: white; margin: 50px auto;")
+            img(src="/images/login_img_1.jpg", style="width: 360px;", ondragstart="return false")
+            br
+            img(src="/images/login_logo.jpg", style="width: 170px; margin-top: 80px;", ondragstart="return false")
+            p(style="color: #787878; font-size: 13pt; font-weight: 400; margin-top: 20px;") Say hola to the World!
+            div(style="width: 330px; text-align: left; margin: 50px auto 0;")
+                p(style="color: #464646; font-size: 13pt;") Nickname
+                input#input_nickname(style="color: #333; width: 330px; height: 40px; margin: 7px 0; font-size: 15pt; font-weight: 500; background-color: rgba(0,0,0,0);", placeholder="Type Nickname to use.")
+                hr.purple_shadow_1(style="background-color: #5E6EFF; width: 330px; height: 2px;")
+                p(style="padding-top: 10px; color: #464646; font-size: 11pt;") * The nickname's length can't over 10 letters.
+            button#bt_submit.purple_shadow_1.bt_submit(style="margin-top: 50px;") Enter
+        
+        script.
+            var socket = io();
+
+            if(getCookie('session_id')) {
+                socket.emit('session_resume', getCookie('session_id'));
+            }
+
+            // Check a nickname that user typed is using by other user.
+            $('#bt_submit').on('click', function() {
+                if($('#input_nickname').val())
+                    socket.emit("check_name", $('#input_nickname').val());
+                else
+                    alert('Enter your nickname.');
+            });
+
+            socket.on('session_resume', function(result) {
+                if(result)
+                    location.href = '/m/people';
+            });
+
+            // Response of the 'check_name' message.
+            socket.on('check_name', function(state) {
+                if(state) {
+                    socket.emit('create_user', $('#input_nickname').val());
+                } else if(!state) {
+                    alert('The nickname is existing already.');
+                } else {
+                    alert("Couldn't connect to server.");
+                }
+            });
+
+            // Response of the 'create_user' message.
+            socket.on('create_user', function(state, session_id) {
+                if(state) {
+                    setCookie('session_id', session_id);
+                    localStorage.clear();
+                    location.href = '/people';
+                } else
+                    alert("Couldn't get session. Check your nickname or state of network.")
+            });
