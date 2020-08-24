@@ -409,9 +409,20 @@ guide_blank {
     height: 50px;
 }
 
-.guide_img {
-    width: calc(100vw - 110px);
-    margin: 0 20px;
+@media all and (min-width: 800px) {
+    .guide_img {
+        display: block;
+        width: 800px;
+        margin: 15px auto;
+    }
+}
+
+@media all and (max-width: 800px) {
+    .guide_img {
+        display: block;
+        width: calc(100vw - 110px);
+        margin: 15px 20px;
+    }
 }
 
 guide_img_description {

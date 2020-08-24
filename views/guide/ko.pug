@@ -12,7 +12,6 @@ html
             guide_text 본 프로젝트는 Node.js와 Express, Socket.io를 이용하여 제작된 채팅 프로젝트입니다. 기본적으로 접속되어 있는 사용자와 채팅을 할 수 있으며, 동시에 다른 사용자와 채팅을 할 수도 있습니다.
             guide_blank
             img.guide_img.shadow_1(src="/images_guide/guide_img1.PNG")
-            guide_img_description [이미지 1] 실행 화면
             guide_blank
             guide_title 구현된 기능들
             guide_text
@@ -34,57 +33,106 @@ html
             guide_blank
             guide_title 폴더 구조
             guide_text
-                |<strong>/bin</strong><br>- 프로젝트 실행을 위한 구성 요소 폴더 입니다. (Express 기본 요소)
+                |<strong>⊙ /bin</strong><br>- 프로젝트 실행을 위한 구성 요소 폴더 입니다. (Express 기본 요소)
                 br
-                |<strong>/node_modules</strong><br>- 본 프로젝트 실행을 위한 모듈들이 위치해 있습니다. (Express 기본 요소)
+                |<strong>⊙ /node_modules</strong><br>- 본 프로젝트 실행을 위한 모듈들이 위치해 있습니다. (Express 기본 요소)
                 br
-                |<strong>/public</strong><br>- 본 프로젝트의 리소스들이 위치한 폴더입니다.
+                |<strong>⊙ /public</strong><br>- 본 프로젝트의 리소스들이 위치한 폴더입니다.
                 br
-                |<strong>/public/images*</strong><br>- 본 프로젝트에서 사용되는 이미지가 저장되어 있습니다.
+                |<strong>⊙ /public/images*</strong><br>- 본 프로젝트에서 사용되는 이미지가 저장되어 있습니다.
                 br
-                |<strong>/public/javascripts</strong><br>- 클라이언트에서 사용되는 javascript가 있습니다. 본 프로젝트에서는 클라이언트 브라우저에서 쿠키에 조금 더 쉽게 사용하기 위해 cookie.js를 사용합니다.
+                |<strong>⊙ /public/javascripts</strong><br>- 클라이언트에서 사용되는 javascript가 있습니다. 본 프로젝트에서는 클라이언트 브라우저에서 쿠키에 조금 더 쉽게 사용하기 위해 cookie.js를 사용합니다.
                 br
-                |<strong>/public/sounds</strong><br>- 본 프로젝트에서 사용되는 사운드가 저장되어 있습니다.
+                |<strong>⊙ /public/sounds</strong><br>- 본 프로젝트에서 사용되는 사운드가 저장되어 있습니다.
                 br
-                |<strong>/public/stylesheets</strong><br>- 본 프로젝트에서 사용되는 스타일시트가 저장되어 있습니다.
+                |<strong>⊙ /public/stylesheets</strong><br>- 본 프로젝트에서 사용되는 스타일시트가 저장되어 있습니다.
                 br
-                |<strong>/routes</strong><br>- 본 프로젝트의 라우팅을 담당합니다.
+                |<strong>⊙ /routes</strong><br>- 본 프로젝트의 라우팅을 담당합니다.
                 br
-                |<strong>/socket</strong><br>- 본 프로젝트의 주요 백엔드 소스가 들어가 있습니다.
+                |<strong>⊙ /socket</strong><br>- 본 프로젝트의 주요 백엔드 소스가 들어가 있습니다.
                 br
-                |<strong>/views</strong><br>- 본 프로젝트의 뷰가 위치되어 있습니다.
+                |<strong>⊙ /views</strong><br>- 본 프로젝트의 뷰가 위치되어 있습니다.
                 br
-                |<strong>/views/desktop</strong><br>- 본 프로젝트의 데스크톱 전용 뷰들이 위치해 있습니다.
+                |<strong>⊙ /views/desktop</strong><br>- 본 프로젝트의 데스크톱 전용 뷰들이 위치해 있습니다.
                 br
-                |<strong>/views/guide</strong><br>- 본 프로젝트의 가이드를 위한 뷰들이 위치해 있습니다.
+                |<strong>⊙ /views/guide</strong><br>- 본 프로젝트의 가이드를 위한 뷰들이 위치해 있습니다.
                 br
-                |<strong>/views/mobile</strong><br>- 본 프로젝트의 모바일 전용 뷰들이 위치해 있습니다.
+                |<strong>⊙ /views/mobile</strong><br>- 본 프로젝트의 모바일 전용 뷰들이 위치해 있습니다.
             guide_blank
             guide_title 주요 뷰 소개
             guide_text
-                |<strong>login.pug</strong><br>- 시작시 나오는 로그인 화면입니다.
+                |<strong>⊙ login.pug</strong><br>- 시작시 나오는 로그인 화면입니다. 이곳에서 자신의 닉네임을 입력하여 채팅 서비스에 진입합니다.
                 img.guide_img.shadow_1(src="/images_guide/guide_img_login.PNG")
                 guide_img_description
-                |<strong>people.pug</strong><br>- 현재 접속된 사용자들을 확인할 수 있습니다.
+                |<strong>⊙ people.pug</strong><br>- 현재 접속된 사용자들을 확인할 수 있습니다. 그리고 원하는 사용자를 클릭하여 새로운 채팅을 열 수 있습니다.
                 img.guide_img.shadow_1(src="/images_guide/guide_img_people.PNG")
                 guide_img_description
-                |<strong>message.pug</strong><br>- 사용자가 접속되어 있는 채팅방들을 확인할 수 있습니다.
+                |<strong>⊙ message.pug</strong><br>- 사용자의 채팅방들을 확인할 수 있습니다. 사용자가 people에서 특정 사용자를 클릭하여 채팅방을 열었거나, 다른 사용자가 채팅 요청을 보내면 해당 페이지에 게시됩니다.
                 img.guide_img.shadow_1(src="/images_guide/guide_img_message.PNG")
                 guide_img_description
-                |<strong>information.pug</strong><br>- 프로젝트의 개발자, 정보등을 확인 할 수 있습니다.
+                |<strong>⊙ information.pug</strong><br>- 프로젝트의 개발자, 정보등을 확인 할 수 있습니다.
                 img.guide_img.shadow_1(src="/images_guide/guide_img_information.PNG")
                 guide_img_description
-                |<strong>chat.pug</strong><br>- 채팅 화면입니다.
+                |<strong>⊙ chat.pug</strong><br>- 채팅 화면입니다. 이곳에서 채팅을 진행할 수 있습니다. 그리고 채팅방을 나갈 때에서는 오른쪽 상단의 'Exit' 버튼을 눌러 채팅 방을 나갈 수 있습니다.
                 img.guide_img.shadow_1(src="/images_guide/guide_img_chat.PNG")
             guide_blank
             guide_title 백엔드 구성
-            guide_text 이번에는 백엔드를 구성하는 소스에 대한 설명입니다. 개발 시간이 가장 많이 소요된 부분인 만큼 함수하나씩 설명하도록 하겠습니다. 'Hola'의 백엔드를 담당하고 있는 파일은 총 3가지(socket.js, user_manager.js, util.js) 입니다. 각각 소켓 통신과 사용자 관리, 각종 기능들이 포함되어 있습니다.
+            guide_text 이번에는 백엔드를 구성하는 소스에 대한 설명입니다. 개발 시간이 가장 많이 소요되고, 가장 핵심인 부분인 만큼 자세히 설명하도록 하겠습니다. 'Hola'의 백엔드를 담당하고 있는 파일은 총 3가지(socket.js, user_manager.js, util.js) 입니다. 각각 소켓 통신과 사용자 관리, 각종 기능들이 포함되어 있습니다.
             guide_blank
             guide_title_mid 'SOCKET.JS' - 소켓 통신
-            guide_text 'socket.js' 파일은 socket.io를 기반하여 소켓 통신을 담당합니다. 사실 거의 모든 백엔드 작업들은 본 파일에서 작동됩니다. 'user_manager.js', 'util.js' 파일들은 본 파일을 위한 파일들이라고 말할 수 있습니다. 결과적으로 본 파일에서는 클라이언트에게 요청를 받거나 보내는 작업을 하게 됩니다.
+                guide_text 'socket.js' 파일은 socket.io를 기반하여 소켓 통신을 담당합니다. 사실 거의 모든 백엔드 작업들은 본 파일에서 작동됩니다. 'user_manager.js', 'util.js' 파일들은 본 파일을 위한 파일들이라고 말할 수 있습니다. 결과적으로 본 파일에서 클라이언트에게 요청를 받거나 보내는 작업을 하게 됩니다.
+                    br
+                    br
+                    |참고로 서버에서 클라이언트로 데이터를 보낼 때 ('메시지 이름', 작업 성공 여부, 데이터들...)와 같이 저만의 양식이 존재합니다.
+                    br
+                    br
+                    |<strong>⊙ connection</strong><br>- 사용자(클라이언트)가 서버에 접속했을 때 function이 실행됩니다.
+                    br
+                    |<strong>⊙ disconnect</strong><br>- 사용자(클라이언트)와 서버가 연결이 끊어졌을 시 실행됩니다. 이곳에서 disconnectedUser()와 reqestDeleteUser()가 실행됩니다. 두 함수에 대해서는 'user_manager.js' 부분에서 설명합니다.
+                    br
+                    |<strong>⊙ check_name</strong><br>- 로그인 화면에서 사용자가 닉네임을 입력한 후 'Enter' 버튼을 눌렀을 때 가장 먼저 실행됩니다. 본 함수에서는 사용자가 입력한 닉네임이 이미 접속되어 있는 사용자 중 해당 닉네임을 가진 사용자가 있는지 확인합니다. 여기서 만약 같은 닉네임을 가진 유저가 없다면 사용자(클라이언트)에게 true를 반환하고, 그렇지 않다면 false를 반환합니다.
+                    br
+                    |<strong>⊙ create_user</strong><br>- 만약 동일한 닉네임이 존재하지 않는다면 해당 닉네임으로 유저를 생성합니다. 그 후 서버에서 무작위로 세션 아이디를 생성한 후 클라이언트에게 전달합니다. (세션 아이디는 사용자를 확인할 때 사용됩니다.)
+                    br
+                    |<strong>⊙ session_resume</strong><br>- 서비스 내에서 페이지 이동이 이루어지면 자연스럽게 소켓 연결도 끊겼다가 이동이 이루어진후에 다시 재연결 됩니다. 마찬가지로 재연결 되었을 때 해당 함수가 실행됩니다. 여기서는 resumeUser()와 cancelDeleteUser()가 실행됩니다. 마찬가지로 두 함수에 대해서는 'user_manager.js' 부분에서 설명합니다.
+                    br
+                    |<strong>⊙ request_data</strong><br>- 사용자가 서버의 데이터가 필요한 화면은 총 3개(people - 접속된 사용자 목록을 보기 위해, message - 사용자가 가지고 있는 채팅방 목록을 보기 위해, chat - 채팅을 할 때 사용자의 정보를 보기 위해) 입니다. 여기서 각각 화면에 맞는 데이터를 클라이언트에게 제공합니다. 'people' 화면 같은 경우에는 나를 제외한 접속된 사용자 목록을 제공해주기 위해 getAllData()를 사용하여 모든 사용자 데이터를 들고온 후 나를 제외시킨 후 사용자(클라이언트)에게 전달합니다. 그리고 'chat' 화면 같은 경우 화면 상단의 이름(수신자의 이름)을 사용자에게 제공합니다. 마지막으로 'message' 화면에서 채팅방 목록을 제공하기 위해 사용자 데이터에 있는 채팅방 목록을 제공합니다. (마찬가지로 자세한 내용은 'user_manager.js'에서 다루겠습니다.)
+                    br
+                    |<strong>⊙ change_my_nickname</strong><br>- 사용자가 자신의 닉네임을 변경할 때 실행됩니다. 먼저, 닉네임 중복 확인을 거친 후 닉네임이 변경됩니다.
+                    br
+                    |<strong>⊙ connect_two_user</strong><br>- 사용자가 'people' 화면에서 특정 사용자를 클릭하면 채팅방을 생성하기 위해 connectEachUser()가 실행됩니다.
+                    br
+                    |<strong>⊙ disconnect_two_user</strong><br>- 만약 사용자가 채팅방을 나간다면 채팅방을 없애기 위해 disconnectEachUser()가 실행됩니다.
+                    br
+                    |<strong>⊙ msg_user</strong><br>- 사용자가 특정 사용자에게 메시지를 보낼 때 실행됩니다. 여기서 다시 사용자에게 true와 false를 반환하는데, 이는 전송 성공, 실패 여부를 나타냅니다.
             guide_blank
             guide_title_mid 'USER_MANAGER.JS' - 사용자 관리
-            guide_text qwerqwer
+                guide_text 'user_manager.js'는 문자그대로 사용자를 관리하는 파일입니다. 처음에 개발을 진행했을 때에는 socket.js에서 바로 사용자 데이터에 접근하여 추가, 수정, 삭제가 가능했지만 프로젝트의 완성도와 보안성을 위해 사용자와 관련된 부분을 따로 모듈화를 하였습니다.
+                br
+                guide_text 사용자의 데이터는 아래의 그림과 같이 딕셔너리 형태로 저장됩니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor.jpg")
+                br
+                guide_text 여기서 각각 사용자 세션 ID는 'login' 화면에서 서비스로 입장하기 전에 서버에게 부여받은 세션 아이디, 접속 여부는 현재 사용자가 서비스에 접속되어 있는지 여부(true or false), 사용자 닉네임은 사용자가 입력한 닉네임 마지막으로 연결된 다른 사용자는 아래에서 예시와 함께 설명합니다.
+                guide_text 만약 예를 들어 닉네임은 'a', 세션 ID는 'abc'인 유저와 닉네임은 '1', 세션 ID는 '123'인 두 유저가 접속되어 있다고 가정합시다. 이때 'a' 유저가 'b' 유저에게 채팅 요청을 보냅니다. 자 그러면 이 순간 서버의 사용자 데이터는 아래의 사진과 같이 변경 됩니다. 보는것과 같이 'a' 유저 데이터의 가장 끝에 '1' 유저의 세션 ID가 추가되었고, '1' 유저에는 'a' 유저의 세션 ID가 추가되었습니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor_1.jpg")
+                br
+                guide_text 그리고 채팅 중이던 두 사용자가 어떤 사용자가 채팅방의 'Exit' 버튼을 눌러 채팅방을 나가면 서버의 유저 데이터는 아래 사진과 같이 변합니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor_2.jpg")
+                br
+                guide_text 이 예시는 반대로 'b' 유저가 'a' 유저에게 채팅을 보냈을 때에도 똑같이 작동합니다. 그리고 만약 다른 여러 유저와 함께 채팅을 한다면 다른 유저의 세션 ID가 더 추가될 것입니다. 이런 아름다운(lol) 방법으로 사용자 관리는 이루어집니다. 이제 몇명 중요 함수들에 대해 알아보겠습니다.
+                    br
+                    |<strong>⊙ createUser()</strong><br>- 현재 사용자(클라이언트)를 전체 유저 데이터에 추가합니다. 참고로 닉네임의 길이는 제한되어 있습니다(UI 충돌을 막기 위해).
+                    br
+                    |<strong>⊙ resumeUser()</strong><br>- 사용자가 페이지를 이동시 소켓 연결이 끊어진 후 다시 연결됩니다. 여기서 중요하게 봐야할 것은 session_id와 socket_id가 서로 완전히 다른 변수인 것입니다. 먼저 session_id는 사용자가 로그인 할 때 정확히 한번만 서버가 사용자에게 부여되는 값입니다. 이 값은 사용자가 접속되어 있는 동안 변경되지 않습니다. 사용자는 이 값을 쿠키로 저장하고, 서버는 이 값을 유저 데이터에 저장하여 사용자를 인식하기 위해 사용합니다. 그리고 socket_id는 사용자가 페이지를 변경할 때마다 바뀌는 값으로 사용자가 특정 사용자에게 메시지를 보낼때 특정 사용자의 현재 위치를 알기 위해 주로 사용됩니다.
+                    br
+                    |<strong>⊙ connectEachUser(), disconnectEachUser()</strong><br>- 
+                    br
+                    |<strong>⊙ connectionCheck()</strong><br>- 
+                    br
+                    |<strong>⊙ reqestDeleteUser()</strong><br>- 
+                    br
+                    |<strong>⊙ cancelDeleteUser()</strong><br>- 
+                    br
             guide_blank
-            guide_title_mid 'UTIL.JS' - 각종 유틸 기능들
+            guide_title_mid 'UTIL.JS' - 각종 유틸 기능
             guide_text qwerqwer
