@@ -1,0 +1,90 @@
+html
+    head
+        title 가이드북
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        meta(name="viewport", content="width=device-width, initial-scale=0.8, maximum-scale=0.9, minimum-scale=0.7")
+    body(style="background-color: #5E6EFF;")
+        h1(style="color: white; padding: 100px 0 0 5vw; font-size: 4em;") 가이드북
+        p(style="color: #ffffffa3; padding-left: 5vw; padding-bottom: 30px;") 작성 일자 : 2020.08.31
+        div.shadow_2(style="width: calc(100vw - 60px); background-color: white; padding: 40px 30px;")
+            guide_title 시작하기
+            guide_text 본 프로젝트는 Node.js와 Express, Socket.io를 이용하여 제작된 채팅 프로젝트입니다. 기본적으로 접속되어 있는 사용자와 채팅을 할 수 있으며, 동시에 다른 사용자와 채팅을 할 수도 있습니다.
+            guide_blank
+            img.guide_img.shadow_1(src="/images_guide/guide_img1.PNG")
+            guide_img_description [이미지 1] 실행 화면
+            guide_blank
+            guide_title 구현된 기능들
+            guide_text
+                |1. 이름 중복확인 후 로그인
+                br
+                |2. 내 이름 변경
+                br
+                |3. 접속되어 있는 사용자 확인
+                br
+                |4. 다른 사용자와 채팅
+                br
+                |5. 채팅방들 확인
+                br
+                |6. 다중 사용자 채팅
+                br
+                |7. 채팅방 나가기
+                br
+                |8. 채팅 알림 소리
+            guide_blank
+            guide_title 폴더 구조
+            guide_text
+                |<strong>/bin</strong><br>- 프로젝트 실행을 위한 구성 요소 폴더 입니다. (Express 기본 요소)
+                br
+                |<strong>/node_modules</strong><br>- 본 프로젝트 실행을 위한 모듈들이 위치해 있습니다. (Express 기본 요소)
+                br
+                |<strong>/public</strong><br>- 본 프로젝트의 리소스들이 위치한 폴더입니다.
+                br
+                |<strong>/public/images*</strong><br>- 본 프로젝트에서 사용되는 이미지가 저장되어 있습니다.
+                br
+                |<strong>/public/javascripts</strong><br>- 클라이언트에서 사용되는 javascript가 있습니다. 본 프로젝트에서는 클라이언트 브라우저에서 쿠키에 조금 더 쉽게 사용하기 위해 cookie.js를 사용합니다.
+                br
+                |<strong>/public/sounds</strong><br>- 본 프로젝트에서 사용되는 사운드가 저장되어 있습니다.
+                br
+                |<strong>/public/stylesheets</strong><br>- 본 프로젝트에서 사용되는 스타일시트가 저장되어 있습니다.
+                br
+                |<strong>/routes</strong><br>- 본 프로젝트의 라우팅을 담당합니다.
+                br
+                |<strong>/socket</strong><br>- 본 프로젝트의 주요 백엔드 소스가 들어가 있습니다.
+                br
+                |<strong>/views</strong><br>- 본 프로젝트의 뷰가 위치되어 있습니다.
+                br
+                |<strong>/views/desktop</strong><br>- 본 프로젝트의 데스크톱 전용 뷰들이 위치해 있습니다.
+                br
+                |<strong>/views/guide</strong><br>- 본 프로젝트의 가이드를 위한 뷰들이 위치해 있습니다.
+                br
+                |<strong>/views/mobile</strong><br>- 본 프로젝트의 모바일 전용 뷰들이 위치해 있습니다.
+            guide_blank
+            guide_title 주요 뷰 소개
+            guide_text
+                |<strong>login.pug</strong><br>- 시작시 나오는 로그인 화면입니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_login.PNG")
+                guide_img_description
+                |<strong>people.pug</strong><br>- 현재 접속된 사용자들을 확인할 수 있습니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_people.PNG")
+                guide_img_description
+                |<strong>message.pug</strong><br>- 사용자가 접속되어 있는 채팅방들을 확인할 수 있습니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_message.PNG")
+                guide_img_description
+                |<strong>information.pug</strong><br>- 프로젝트의 개발자, 정보등을 확인 할 수 있습니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_information.PNG")
+                guide_img_description
+                |<strong>chat.pug</strong><br>- 채팅 화면입니다.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_chat.PNG")
+            guide_blank
+            guide_title 백엔드 구성
+            guide_text 이번에는 백엔드를 구성하는 소스에 대한 설명입니다. 개발 시간이 가장 많이 소요된 부분인 만큼 함수하나씩 설명하도록 하겠습니다. 'Hola'의 백엔드를 담당하고 있는 파일은 총 3가지(socket.js, user_manager.js, util.js) 입니다. 각각 소켓 통신과 사용자 관리, 각종 기능들이 포함되어 있습니다.
+            guide_blank
+            guide_title_mid 'SOCKET.JS' - 소켓 통신
+            guide_text 'socket.js' 파일은 socket.io를 기반하여 소켓 통신을 담당합니다. 사실 거의 모든 백엔드 작업들은 본 파일에서 작동됩니다. 'user_manager.js', 'util.js' 파일들은 본 파일을 위한 파일들이라고 말할 수 있습니다. 결과적으로 본 파일에서는 클라이언트에게 요청를 받거나 보내는 작업을 하게 됩니다.
+            guide_blank
+            guide_title_mid 'USER_MANAGER.JS' - 사용자 관리
+            guide_text qwerqwer
+            guide_blank
+            guide_title_mid 'UTIL.JS' - 각종 유틸 기능들
+            guide_text qwerqwer

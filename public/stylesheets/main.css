@@ -354,18 +354,69 @@ html, body {
 .div_select_language {
     border-bottom: 1px solid #202020;
     padding-bottom: 5px;
+    transition: border-bottom 0.2s ease;
 }
 
 .div_select_language > a {
     color: #202020;
     font-size: 16pt;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .div_select_language:hover {
-    border-bottom: 1px solid #5e6eff;
+    border-bottom: 5px solid #5e6eff;
 }
 
 .div_select_language > a:hover {
     color: #5e6eff;
+}
+
+guide_title {
+    color: #2d2d2d;
+    font-size: 1.7em;
+    display: block;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+guide_title_mid {
+    color: #2d2d2d;
+    font-size: 1.3em;
+    display: block;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+guide_hr {
+    width: calc(100vw - 60px);
+    height: 1px;
+    background-color: #737373;
+    display: block;
+    margin: 10px 0;
+}
+
+guide_text {
+    display: block;
+    color: #525252;
+    font-size: 13pt;
+    line-height: 25pt;
+    font-weight: 300;
+}
+
+guide_blank {
+    display: block;
+    height: 50px;
+}
+
+.guide_img {
+    width: calc(100vw - 110px);
+    margin: 0 20px;
+}
+
+guide_img_description {
+    color: #808080;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
 }

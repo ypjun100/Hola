@@ -6,16 +6,16 @@ router.get('/test_page', function(req, res, next) {
   res.render('test_page')
 });
 
-router.get('/instruction', function(req, res, next) {
-  res.render('instruction/index');
+router.get('/guide', function(req, res, next) {
+  res.render('guide/index');
 });
 
-router.get('/instruction/ko', function(req, res, next) {
-  res.render('instruction/ko');
+router.get('/guide/ko', function(req, res, next) {
+  res.render('guide/ko');
 });
 
-router.get('/instruction/en', function(req, res, next) {
-  res.render('instruction/en');
+router.get('/guide/en', function(req, res, next) {
+  res.render('guide/en');
 });
 
 /* PC */
