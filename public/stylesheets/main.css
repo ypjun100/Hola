@@ -1,7 +1,7 @@
 /*Main Color: #ff7d78 */
 
 /*Get 'Google Noto Sans' Fonts*/
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /*Prevent Drag Evnet*/
 .prev_drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
