@@ -1,0 +1,152 @@
+html
+    head
+        title GUIDEBOOK
+        link(rel="stylesheet", href="/stylesheets/main.css")
+        script(src="//code.jquery.com/jquery-1.11.1.js")
+        meta(name="viewport", content="width=device-width, initial-scale=0.8, maximum-scale=0.9, minimum-scale=0.7")
+    body(style="background-color: #5E6EFF;")
+        h1(style="color: white; padding: 100px 0 0 5vw; font-size: 4em;") GUIDEBOOK
+        p(style="color: #ffffffa3; padding-left: 5vw; padding-bottom: 30px;") Date of issue : 2020.08.31
+        div.shadow_2(style="width: calc(100vw - 60px); background-color: white; padding: 40px 30px;")
+            guide_title Get Started
+            guide_text This project is a chat project created using Node.js, Express, and Socket.io. You can chat with connected users, and you can also chat with other users at the same time.
+            guide_blank
+            img.guide_img.shadow_1(src="/images_guide/guide_img1.PNG")
+            guide_blank
+            guide_title Implemented functions
+            guide_text
+                |1. Check for duplicate nicknames
+                br
+                |2. Change my nickname
+                br
+                |3. Checking the connected user
+                br
+                |4. Chat with other users
+                br
+                |5. Check the list of chat rooms
+                br
+                |6. Multi-user chat
+                br
+                |7. Leave the chat room
+                br
+                |8. Chat notification sound
+            guide_blank
+            guide_title Folder structure
+            guide_text
+                |<strong>⊙ /bin</strong><br>- This is the component folder for project execution. (Basic element of Express)
+                br
+                |<strong>⊙ /node_modules</strong><br>- Modules for project execution are located. (Basic element of Express)
+                br
+                |<strong>⊙ /public</strong><br>- This is the folder where the project resources are located. (Basic element of Express)
+                br
+                |<strong>⊙ /public/images*</strong><br>- Images used in the project are located.
+                br
+                |<strong>⊙ /public/javascripts</strong><br>- Located a javascript for the client. In this project,'cookie.js' is used to access cookies a little more easily in the client browser.
+                br
+                |<strong>⊙ /public/sounds</strong><br>- Sound files used in the project are located.
+                br
+                |<strong>⊙ /public/stylesheets</strong><br>- Style sheets used in the project are located.
+                br
+                |<strong>⊙ /routes</strong><br>- Responsible for routing the project. (Basic element of Express)
+                br
+                |<strong>⊙ /socket</strong><br>- Contains the main backend sources for the project.
+                br
+                |<strong>⊙ /views</strong><br>- The views of the project are located. (Basic element of Express)
+                br
+                |<strong>⊙ /views/desktop</strong><br>- Desktop-only views of the project are located.
+                br
+                |<strong>⊙ /views/guide</strong><br>- Guide of the profject are located.
+                br
+                |<strong>⊙ /views/mobile</strong><br>- Mobile-only views of the project are located.
+            guide_blank
+            guide_title Views
+            guide_text
+                |<strong>⊙ login.pug</strong><br>- This is the login screen that appears at startup. Enter your nickname to enter the chat service.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_login.PNG")
+                guide_img_description
+                |<strong>⊙ people.pug</strong><br>- You can check the currently connected users. And you can click on the desired user to open a new chat.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_people.PNG")
+                guide_img_description
+                |<strong>⊙ message.pug</strong><br>- You can check the chat rooms the user has joined. When a user clicks on a specific person on the'people' screen to open a chat room, or when another user sends a chat request, it is posted on that page.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_message.PNG")
+                guide_img_description
+                |<strong>⊙ information.pug</strong><br>- You can check the developer and information of the project.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_information.PNG")
+                guide_img_description
+                |<strong>⊙ chat.pug</strong><br>- Chat screen. You can chat here. And you can leave the chat room by clicking the'Exit' button in the upper right corner.
+                img.guide_img.shadow_1(src="/images_guide/guide_img_chat.PNG")
+            guide_blank
+            guide_title Structure of Backend
+            guide_text As it takes the most development time and is the most important part, I will explain in detail. There are a total of 3 files (socket.js, user_manager.js, util.js) that are in charge of the backend of 'Hola'. Each socket communication, user management, and various functions are included.
+            guide_blank
+            guide_title_mid 'SOCKET.JS' - Socket communication
+                guide_text The 'socket.js' file is responsible for socket communication based on socket.io. In fact, almost all backend operations work on this file. As a result, the file receives or sends a request to the client.
+                    br
+                    br
+                    |<strong>⊙ connection</strong><br>- Executed when a user(client) connects to the server.
+                    br
+                    |<strong>⊙ disconnect</strong><br>- Executed when user(client) and server are disconnected. disconnectedUser() and reqestDeleteUser() are executed. Both functions are described in the 'user_manager.js' section.
+                    br
+                    |<strong>⊙ check_name</strong><br>- It is executed first when the user presses the 'Enter' button after entering the nickname on the login screen. In this function, it checks whether the nickname entered by the user is duplicated with the nickname of the connected user. If there is no user with the same nickname, it returns true to the user(client), otherwise it returns false.
+                    br
+                    |<strong>⊙ create_user</strong><br>- If the same nickname does not exist, a user is created with that nickname. After that, the server randomly generates a session ID and passes it to the client. (The session ID is used to verify the user.)
+                    br
+                    |<strong>⊙ session_resume</strong><br>- When a page is moved within the service, the socket connection is naturally disconnected and then reconnected. Likewise, when reconnected, the functions resumeUser() and cancelDeleteUser() are executed. Similarly, both functions are described in the'user_manager.js' section.
+                    br
+                    |<strong>⊙ request_data</strong><br>- There are three screens in which user(client) need data from the server ('people' - to see the list of connected users, 'message' - to see the list of chat rooms the user has joined, and 'chat' - to see the user's information when chatting). Here, the data according to each screen is provided to the client. In the case of the'people' screen, getAllData() is used to provide a list of connected users excluding me, and after excluding me, it is delivered to the user (client). And in the case of a'chat' screen, it provides the user with the name at the top of the screen (the name of another user). Finally, in the'message' screen, we provide a list of chat rooms in user data to provide a list of chat rooms. (Likewise, details will be covered in'user_manager.js'.)
+                    br
+                    |<strong>⊙ change_my_nickname</strong><br>- Executed when the user changes their nickname. The nickname is changed after checking for duplicate nicknames.
+                    br
+                    |<strong>⊙ connect_two_user</strong><br>- When a user clicks on a specific user in the 'people' screen, connectEachUser() is executed to create a chat room.
+                    br
+                    |<strong>⊙ disconnect_two_user</strong><br>- If the user leaves the chat room, disconnectEachUser() is executed to remove the chat room.
+                    br
+                    |<strong>⊙ msg_user</strong><br>- Executed when a user sends a message to a specific user. Here again, you can see that it returns true and false to the user, which indicates whether the transmission was successful or failed.
+            guide_blank
+            guide_title_mid 'USER_MANAGER.JS' - User management
+            guide_text 'user_manager.js' literally manages users. In 'Hola', user-related parts are separately modularized for completeness and security.
+                br
+                guide_text User data is saved in dictionary format as shown in the figure below.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor_en.jpg")
+                br
+                guide_text Here, <strong>User Session ID</strong> is the session ID given to the server before entering the service on the 'login' screen, and <strong>User connection state</strong> is whether the current user is connected to the server. (true or false), <strong>Nickname</strong> is the nickname entered by the user on the 'login' screen, <strong>Socket ID</strong> is the socket to which the current user is connected (refer to resumeUser() for details ), and finally <strong>Chat-rooms</strong> is explained with an example below.
+                guide_text For example, suppose that a user with a nickname of 'a' and a session ID of 'abc', and other user with a nickname of '1' and a session ID of '123' are connected. At this time, user 'a' sends a chat request to user '1'. Now, at this moment, the user data of the server is changed as shown in the pigure below. As you can see, the session ID of user '1' is added to the end of user data'a', and the session ID of user 'a' is added to user '1'.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor_1.jpg")
+                br
+                guide_text And when someone press the'Exit' button of the chat room to leave the chat room, the user data on the server is changed as shown in the figure below.
+                img.guide_img.shadow_1(src="/images_guide/guide_user_structor_2.jpg")
+                br
+                guide_text Conversely, this example works the same when user '1' sends a chat to user 'a'. And if you chat with multiple users, the other user's session ID will be added to the end of user data. Now let's look at some of the important functions.
+                    br
+                    br
+                    |<strong>⊙ createUser()</strong><br>- Add current user(client) to server's user data. Note that the length of the nickname is limited (for avoid UI crashes).
+                    br
+                    |<strong>⊙ resumeUser()</strong><br>- If the user navigates the page, the socket is disconnected briefly while the page is being moved and then reconnected. The important thing to note here is that <strong>session_id and socket_id are completely different variables.</strong> First, session_id is a value that the server gives to the user exactly once in the user log-in. This value does not change while the user is existed. The user stores this value as a cookie, and the server stores this value in user data and uses it to authenticate the user. And socket_id is a value that changes every time the user moves the page, and is used to know the current location of a specific user when a user sends a message to a specific user.
+                    br
+                    |<strong>⊙ connectEachUser(), disconnectEachUser()</strong><br>- We just looked at the process that occurs when a chat room for two users is created at the request of a user, and these two functions do that.
+                    br
+                    |<strong>⊙ connectionCheck()</strong><br>- A function that checks the connectoin of two user. If two users are connected to each other, a message will be sent. However, if the two users are not connected, they cannot send or receive messages.
+                    br
+                    |<strong>⊙ reqestDeleteUser()</strong><br>- Maybe it is the most essential function in 'user_manager.js'. First, the connection between the server and the client will be lost if the user closes the browser. Then, as shown above, the part of <strong>User connection state</strong> changes from true to false. (This process is performed in disconnectedUser().) And the 'reqestDeleteUser()' function is executed immediately. This function has the function of deleting the user from user data if the user's session does not return within exactly a minute (if the user does not return). 'SetTimeout()' was used to wait for 1 minute. After a miniute user data and data of chat rooms(include chat room of other user's data) are deleted.
+                    br
+                    |<strong>⊙ cancelDeleteUser()</strong><br>- If the user comes back within a minute, they will have to cancel the jobs scheduled in 'reqestDeleteUser()'. This work will run here.
+                    br
+            guide_blank
+            guide_title_mid 'UTIL.JS' - Various utility functions
+            guide_text In the 'util.js' file, i planned to put various functions for the project, but there are not many functions to put in, so there is only one function at this time.
+                br
+                br
+                |<strong>⊙ createSessionID()</strong><br>- This function has the function of generating session ID for connection between client and server. Session IDs are randomly generated with a total of 10 hexadecimal digits.
+            guide_blank
+            guide_title Result
+                br
+                guide_text 'Hola' was created while learning Node.js, Express, and Socket.io with the idea of 'Let's create a chat service!!!'. I wasn't familiar with Socket.io and I was working on the project right away, so there were a lot of difficulties in development, but I think I got more knowledge while working on the project. I've been doing only the front-end so far, but seeing the back-end through Node.js seems to be a very interesting. Then, i will continue to meet you with various projects.
+            guide_blank
+            guide_title Contact
+                br
+                guide_text Any inquiries about code problems or improvements are welcome. Please contact me!
+                guide_text e-mail : <guide_email id="my_email">ypjun100@gmail.com</guide_email>
+            script.
+                $('#my_email').on('click', function() {
+                    prompt('e-mail address', 'ypjun100@gmail.com');
+                });

@@ -431,3 +431,11 @@ guide_img_description {
     text-align: center;
     margin-top: 15px;
 }
+
+guide_email {
+    color: #386cff;
+    font-size: 13pt;
+    line-height: 25pt;
+    font-weight: 400;
+    cursor: pointer;
+}
