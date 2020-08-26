@@ -7,4 +7,4 @@
 
 
 ## USAGE
-You need basically Node.js, Express, and Socket&#46 to start the project.
+You need basically Node.js, Express, and Socket&#46;io to start the project.
