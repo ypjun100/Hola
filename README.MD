@@ -5,14 +5,14 @@
 > <a href="https://hola-play.herokuapp.com" target="_blank">https://hola-play.herokuapp.com</a>
 
 
->And if you want to know more about this project or structure of this, i provide a guidebook of this project. Just visit below site.   
+>And if you want to know more and structure of this project, I made a guidebook. Just visit below site.   
 <a href="https://hola-play.herokuapp.com/guide" target="_blank">https://hola-play.herokuapp.com/guide</a>
 
 Screenshots
 -----------
 <img src="https://raw.githubusercontent.com/ypjun100/Hola/master/public/images_guide/guide_img1.PNG">
 
-## USAGE
+## Usage
 You need basically Node.js, Express, and Socket&#46;io to start the project.   
 ```
 1. Clone the project
