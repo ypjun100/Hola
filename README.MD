@@ -13,7 +13,7 @@ Screenshots
 <img src="https://raw.githubusercontent.com/ypjun100/Hola/master/public/images_guide/guide_img1.PNG">
 
 ## Usage
-You need basically a Node.js to start the project.   
+You basically need a Node.js to start the project.   
 ```
 1. Clone the project
 2. Enter the project directory and run 'npm update'
