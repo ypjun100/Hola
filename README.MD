@@ -2,11 +2,11 @@
 'Hola' is a chatting project created using Node.js, Express, and Socket&#46;io. You  can chat with connected users and other users at the same time.
 
 > You can experience the projects below.  
-> <a href="https://hola.junyeong.co.kr" target="_blank">https://hola.junyeong.co.kr</a>
+> <a href="http://hola.junyeong.co.kr" target="_blank">http://hola.junyeong.co.kr</a>
 
 
 >And if you want to know more and structure of this project, I made a guidebook. Just visit site below.    
-<a href="https://hola.junyeong.co.kr/guide" target="_blank">https://hola.junyeong.co.kr/guide</a>
+<a href="http://hola.junyeong.co.kr/guide" target="_blank">http://hola.junyeong.co.kr/guide</a>
 
 Screenshots
 -----------
